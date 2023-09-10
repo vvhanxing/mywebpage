@@ -11,6 +11,11 @@ def cover():
     return render_template("./cover/index.html")
 
 
+@app.route("/blog001",methods = ["GET","POST"])
+def blog001():
+    return render_template("./blog001/index.html")
+
+
 
 
 if __name__ == '__main__':
