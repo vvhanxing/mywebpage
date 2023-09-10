@@ -1,7 +1,7 @@
 from flask import Flask, send_file, Response, send_from_directory
 from flask import jsonify,request,render_template
 app = Flask(__name__)
-deploy_port = "http://114.55.178.110" #http://127.0.0.1:5000  #"http://114.55.178.110"
+deploy_port = "http://114.55.178.110" #http://127.0.0.1:5000  #阿里云"http://114.55.178.110" #
 
 
 @app.route("/cover",methods = ["GET","POST"])
