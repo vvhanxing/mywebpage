@@ -10,13 +10,9 @@ def mainpage():
 def cover():
     return render_template("./cover/index.html")
 
-
-@app.route("/blog001",methods = ["GET","POST"])
-def blog001():
-    return render_template("./blog001/index.html")
-
-
-
+@app.route("/<blogindex>",methods = ["GET","POST"])
+def blogs(blogindex):
+    return render_template("./blogs/{}/index.html".format(blogindex))
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1",port=5000 ,debug=True)  # 172.20.10.7
