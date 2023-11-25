@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Markdown实时渲染</title>
+    <style>
+        textarea {
+            width: 100%;
+            height: 150px; /* 设置一个默认的高度 */
+            resize: both; /* 允许拖动改变大小 */
+            border: 1px solid #ccc;
+        }
+
+        #rendered-output {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="rendered-output">{{ initial_markdown  | safe }}</div>
+    <textarea id="markdown-input">{{ initial_input_text }}</textarea>
+    <button id="submit-btn">提交</button>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('rendered_html', function(html) {
+            document.getElementById('rendered-output').innerHTML = html;
+        });
+        
+         socket.on('get_input', function(html) {
+        document.getElementById('markdown-input').innerHTML = html;
+        });       
+        
+
+        document.getElementById('markdown-input').addEventListener('input', function() {
+            var markdownText = this.value;
+            socket.emit('render_markdown', {markdown: markdownText});
+            
+            
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            var markdownText = document.getElementById('markdown-input').value;
+            socket.emit('save_markdown', {markdown: markdownText});
+          
+            
+            
+        });
+    </script>
+</body>
+</html>

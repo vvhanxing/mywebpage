@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Markdown editor [WIP]</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Code+Pro:500"rel="stylesheet'><link rel="stylesheet" href="{{ url_for('static',filename='./markdown_render/style.css') }}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="root">
+  <div class="row expanded collapse">
+    <div class="medium-6 column">
+      <div class="row column">
+        <div class="col-title">
+          Mardown 
+        </div>
+      </div>
+      <textarea autocapitalize="off" autocomplete="off" autocorrect="off" id="editor" spellcheck="false" v-model="mdRaw">{{ initial_input_text }}</textarea>
+    </div>
+    <div class="medium-6 column">
+      <div class="col-title">
+        Render 
+      </div>
+      <div class="markdown-body" v-html="mdRawRender"></div>
+    </div>
+  </div>
+</div>
+<!-- partial -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+<script>
+
+var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        //socket.on('rendered_html', function//(html) {
+            //document.getElementById('rendered//-output').innerHTML = html;
+        //});
+
+document.getElementById('editor').addEventListener('input', function() {
+            var markdownText = this.value;
+            socket.emit('render_markdown', {markdown: markdownText});
+            socket.emit('save_markdown', {markdown: markdownText}); 
+        });
+</script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js'></script>
+<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/190177/marked.js'></script><script  src="{{ url_for('static',filename='./markdown_render/script.js') }}"></script>
+
+</body>
+</html>
