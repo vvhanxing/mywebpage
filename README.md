@@ -2,7 +2,7 @@ import anthropic
 
 client = anthropic.Anthropic(
     # defaults to os.environ.get("ANTHROPIC_API_KEY")
-    api_key="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",
+    api_key="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",
 )
 message = client.messages.create(
     model="claude-3-opus-20240229",
